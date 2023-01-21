@@ -1,0 +1,15 @@
+1. install this extension by id : snlbaral.express-mongo-snippets
+2. use snippets to create the app
+3. install dependencies:
+    mongodb dotenv express cors nodemon jsonwebtoken
+4. setup the package json file
+
+
+
+*********Detail work using snippets*******
+1. use emapp
+2. for routing use emra
+3. rename the router to app from routing
+4. delete all unnecessary codes
+5. create app.get('/') route to visible your ex app.  
+
