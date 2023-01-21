@@ -13,3 +13,7 @@
 4. delete all unnecessary codes
 5. create app.get('/') route to visible your ex app.  
 
+********Before you push this app********
+1. create .gitignore file
+2. put nodemodules and .env files in it 
+3. now push
