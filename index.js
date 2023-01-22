@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const Authorization = require('./Authorization');
 require('dotenv').config()
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 // Mongo DB Connections
-
+const uri = "mongodb+srv://travellerDB:9hWwVNU1dLyrRoEn@cluster0.telyg.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
 // Middleware Connections
@@ -14,67 +15,35 @@ app.use(express.json())
 
 
 // Routes
-
-// // Get all indexs
-// app.get('/', Authorization, async (req, res) => {
-//     try {
-//         const indexs = await Index.find()
-//         res.send(indexs)
-//     } catch (error) {
-//         res.status(500).send(error.message)
-//     }
-// })
-
-// // Create a new index
-// app.post('/', Authorization, async (req, res) => {
-//     try {
-//         let index = new Index({
-//             key: value
-//         })
-//         index = await index.save()
-//         res.send(index)
-//     } catch (error) {
-//         res.status(500).send(error.message)
-//     }
-// })
-
-// // Get index By ID
-// app.get('/:id', Authorization, async (req, res) => {
-//     try {
-//         const index = await Index.findById(req.params.id)
-//         res.send(index)
-//     } catch (error) {
-//         res.status(500).send(error.message)
-//     }
-// })
-
-// // Update index By ID
-// app.put('/:id', Authorization, async (req, res) => {
-//     try {
-//         const index = await Index.findByIdAndUpdate(req.params.id, {
-//             key: value
-//         }, { new: true })
-//         res.send(index)
-//     } catch (error) {
-//         res.status(500).send(error.message)
-//     }
-// })
-
-// // Delete index By ID
-// app.delete('/:id', Authorization, async (req, res) => {
-//     try {
-//         const index = await Index.findByIdAndDelete(req.params.id)
-//         res.send(index)
-//     } catch (error) {
-//         res.status(500).send(error.message)
-//     }
-// })
+async function connectDB() {
+    try {
+        // db collections
+        const database = client.db('traveller');
+        const blogCollection = database.collection('blogs');
 
 
+        //all get api's\\
+
+        //all post api's
+        app.post('/blogs', async (req, res) => {
+            const blog = req.body;
+            const result = await blogCollection.insertOne(blog);
+            if (result.insertedId) {
+                res.send({ result, success: true })
+            }
+            else {
+                res.send({ success: false, message: 'Something went wrong' })
+            }
+        })
+
+
+    }
+    finally { }
+}
+connectDB()
 
 
 // Connection
-
 app.get('/', (req, res) => {
     res.send('<h1>Hello Touch Me</h1>');
 })
